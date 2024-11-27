@@ -1,11 +1,20 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { View ,Text} from 'react-native';
+import { View ,Text, TouchableOpacity} from 'react-native';
 
 
 const HomeScreen = () =>{
+    const navigation = useNavigation();
     return(
         <View>
-            <Text>HomeScreen</Text>
+            <View>
+                <Text>Portfolio</Text>
+            </View>
+            <View>
+                <TouchableOpacity onPress={() => navigation.navigate('UserProfile')}>
+                    <Text>Profile</Text>
+                </TouchableOpacity>
+            </View>
         </View>
     )
 }
