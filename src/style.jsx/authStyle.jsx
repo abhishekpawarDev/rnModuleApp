@@ -9,7 +9,7 @@ export const authStylesheet = StyleSheet.create({
     flexGrow: 1,
     justifyContent: 'center', 
     alignItems: 'center', 
-    padding: 16, 
+    padding: 16,
   },
   formContainer: {
     width: '100%',
@@ -36,5 +36,9 @@ export const authStylesheet = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  error: {
+    color: 'red',
+    marginBottom: 10,
   },
 });
