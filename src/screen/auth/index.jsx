@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, TextInput, TouchableOpacity, View, Text, ScrollView } from "react-native";
 
 const Authentication = () => {
+
     return (
         <ScrollView contentContainerStyle={styles.scrollContainer}>
             <View style={styles.mainContainer}>
@@ -70,8 +71,8 @@ const styles = StyleSheet.create({
     },
     mainButton: {
         width: "85%",
-        height: 50,
-        backgroundColor: "#78aede", 
+        height: 40,
+        backgroundColor: "#0095F6", 
         borderRadius: 10,
         justifyContent: "center",
         alignItems: "center",
@@ -84,7 +85,7 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         color: "white",
-        fontSize: 20,
+        fontSize: 16,
         fontWeight: "bold",
     },
 });
