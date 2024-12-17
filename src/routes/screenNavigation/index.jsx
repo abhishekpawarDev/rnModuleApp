@@ -5,6 +5,8 @@ import AuthenticationScreen from '../../screen/auth';
 import HomeScreen from '../../screen/home';
 import UserProfileScreen from '../../screen/profile';
 import MobileInfoScreen from '../../screen/mobileInfo';
+import SplashScreen from '../../screen/splashScreen';
+import Authentication from '../../screen/auth';
 
 // const navigation = useNavigation();
 const Stack = createNativeStackNavigator();
@@ -12,10 +14,17 @@ const Stack = createNativeStackNavigator();
 const Routes = () => {
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName="Auth">
+            <Stack.Navigator initialRouteName='Auth'>
+            <Stack.Screen
+                    name="splash"
+                    component={SplashScreen}
+                    options={{ 
+                        headerShown: false,
+                     }}
+                />
                 <Stack.Screen
                     name="Auth"
-                    component={AuthenticationScreen}
+                    component={Authentication}
                     options={{ 
                         headerShown: false,
                      }}

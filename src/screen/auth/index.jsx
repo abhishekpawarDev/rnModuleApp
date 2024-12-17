@@ -1,69 +1,92 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, TextInput, ScrollView } from 'react-native';
-import { authStylesheet } from '../../style.jsx/authStyle';
-import { Formik } from 'formik';
-import * as Yup from 'yup';
-import { useNavigation } from '@react-navigation/native';
+import React from "react";
+import { StyleSheet, TextInput, TouchableOpacity, View, Text, ScrollView } from "react-native";
 
-const AuthenticationScreen = () => {
-  const navigation = useNavigation();
+const Authentication = () => {
+    return (
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
+            <View style={styles.mainContainer}>
+                <Text style={styles.headerText}>Welcome Back!</Text>
 
-  const validationSchema = Yup.object().shape({
-    email: Yup.string()
-      .email('Invalid email format')
-      .required('Email is required'),
-    password: Yup.string()
-      .min(6, 'Password must be at least 6 characters')
-      .required('Password is required'),
-  });
+                <TextInput
+                    placeholder="Enter Email or Mobile Number"
+                    placeholderTextColor="#8E8E93"
+                    style={styles.inputStyle}
+                    keyboardType="email-address"
+                />
+                <TextInput
+                    placeholder="Enter Password"
+                    placeholderTextColor="#8E8E93"
+                    style={styles.inputStyle}
+                    secureTextEntry={true}
+                />
 
-  return (
-    <ScrollView contentContainerStyle={authStylesheet.scrollViewContainer}>
-      <Formik
-        initialValues={{
-          email: '',
-          password: '',
-        }}
-        validationSchema={validationSchema}
-        onSubmit={(values) => {
-          // console.log('Form Data:', values);
-          navigation.navigate('HomeScreen');
-        }}
-      >
-        {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
-          <View style={authStylesheet.formContainer}>
-            <TextInput
-              placeholder="Enter Email"
-              style={authStylesheet.inputStyle}
-              onChangeText={handleChange('email')}
-              onBlur={handleBlur('email')}
-              value={values.email}
-            />
-            {touched.email && errors.email && (
-              <Text style={authStylesheet.error}>{errors.email}</Text>
-            )}
-            <TextInput
-              placeholder="Password"
-              style={authStylesheet.inputStyle}
-              secureTextEntry
-              onChangeText={handleChange('password')}
-              onBlur={handleBlur('password')}
-              value={values.password}
-            />
-            {touched.password && errors.password && (
-              <Text style={authStylesheet.error}>{errors.password}</Text>
-            )}
-            <TouchableOpacity
-              style={authStylesheet.buttonMain}
-              onPress={handleSubmit} 
-            >
-              <Text style={authStylesheet.buttonText}>Log In</Text>
-            </TouchableOpacity>
-          </View>
-        )}
-      </Formik>
-    </ScrollView>
-  );
+                <TouchableOpacity style={styles.mainButton}>
+                    <Text style={styles.buttonText}>Authenticate</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.mainButton}>
+                    <Text style={styles.buttonText}>Continue With Google</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.mainButton}>
+                    <Text style={styles.buttonText}>Set Up Account</Text>
+                </TouchableOpacity>
+            </View>
+        </ScrollView>
+    );
 };
 
-export default AuthenticationScreen;
+const styles = StyleSheet.create({
+    scrollContainer: {
+        flexGrow: 1,
+        justifyContent: "center",
+        backgroundColor: "#F5F5F7",
+    },
+    mainContainer: {
+        flex: 1,
+        alignItems: "center",
+        paddingVertical: 20,
+    },
+    headerText: {
+        fontSize: 28,
+        fontWeight: "bold",
+        color: "#78aede",
+        marginBottom: 30,
+    },
+    inputStyle: {
+        borderWidth: 1,
+        width: "85%",
+        marginBottom: 15,
+        height: 50,
+        borderColor: "#CCC",
+        borderRadius: 10,
+        paddingHorizontal: 15,
+        fontSize: 18,
+        color: "black",
+        backgroundColor: "white",
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 5,
+        elevation: 3,
+    },
+    mainButton: {
+        width: "85%",
+        height: 50,
+        backgroundColor: "#78aede", 
+        borderRadius: 10,
+        justifyContent: "center",
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 5,
+        elevation: 3,
+        marginVertical: 10
+    },
+    buttonText: {
+        color: "white",
+        fontSize: 20,
+        fontWeight: "bold",
+    },
+});
+
+export default Authentication;

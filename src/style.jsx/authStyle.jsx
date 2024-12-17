@@ -16,9 +16,9 @@ export const authStylesheet = StyleSheet.create({
     maxWidth: 400,
   },
   inputStyle: {
-    height: 50,
+    height: 70,
     borderColor: '#ccc',
-    borderWidth: 1,
+    borderWidth:1,
     borderRadius: 8,
     marginBottom: 16,
     paddingHorizontal: 16,
@@ -27,15 +27,17 @@ export const authStylesheet = StyleSheet.create({
   },
   buttonMain: {
     height: 50,
-    backgroundColor: '#007BFF',
+    backgroundColor: '#789dcf',
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 8,
+    borderRadius: 25,
+    borderColor:'black',
+    borderWidth:2,
   },
   buttonText: {
     color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
+    fontSize: 20,
+    fontWeight: '500',
   },
   error: {
     color: 'red',
