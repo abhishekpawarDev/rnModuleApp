@@ -147,9 +147,9 @@ const styles = StyleSheet.create({
     },
     headerText: {
         fontSize: 28,
-        fontWeight: "bold",
         color: "#78aede",
         marginBottom: 30,
+        fontFamily:'Oswald-Bold'
     },
     inputStyle: {
         borderWidth: 1,
@@ -167,6 +167,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.1,
         shadowRadius: 5,
         elevation: 3,
+        fontFamily:'Oswald-Regular'
     },
     mainButton: {
         width: "85%",
@@ -184,13 +185,14 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         color: "white",
-        fontSize: 16,
-        fontWeight: "bold",
+        fontSize: 20,
+        fontFamily:'Oswald-Bold'
     },
     errorText: {
         color: "red",
         fontSize: 12,
         marginBottom: 5,
+        fontFamily:'Oswald-Regular'
     },
 });
 
