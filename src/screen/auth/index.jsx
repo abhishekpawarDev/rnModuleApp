@@ -1,35 +1,63 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, TextInput, TouchableOpacity, View, Text, ScrollView } from "react-native";
-import { Formik } from 'formik';
-import * as Yup from 'yup';
+import {
+    StyleSheet,
+    TextInput,
+    TouchableOpacity,
+    View,
+    Text,
+    ScrollView,
+    Alert,
+} from "react-native";
+import { Formik } from "formik";
+import * as Yup from "yup";
 import { useNavigation } from "@react-navigation/native";
-import authanticationData from '../../authanticationData.json'
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import authanticationData from "../../authanticationData.json";
 
 const Authentication = () => {
     const navigation = useNavigation();
     const validationSchema = Yup.object().shape({
         email: Yup.string()
-            .email('Invalid email address')
-            .required('Email is required'),
+            .email("Invalid email address")
+            .required("Email is required"),
         password: Yup.string()
-            .min(6, 'Password must be at least 6 characters')
-            .required('Password is required'),
+            .min(6, "Password must be at least 6 characters")
+            .required("Password is required"),
     });
-    
-    const [authData , setAuthData] = useState([]);
-    
+
+    const [authData, setAuthData] = useState([]);
+
     useEffect(() => {
         setAuthData(authanticationData);
+
+        const checkUser = async () => {
+            const userData = await AsyncStorage.getItem("userData");
+            if (userData) {
+                navigation.navigate("HomeScreen"); 
+            }
+        };
+
+        checkUser();
     }, []);
 
-    const handleAuthentication = (values) => {
-        const user = authData.find(item => item.useremail === values.email && item.userpassword === values.password);
-        
+    const handleAuthentication = async (values) => {
+        const user = authData.find(
+            (item) =>
+                item.useremail === values.email &&
+                item.userpassword === values.password
+        );
+
         if (user) {
-            console.log('User authenticated:', user);
-            navigation.navigate('HomeScreen'); // Navigate to HomeScreen if credentials match
+            try {
+                // Save user data to AsyncStorage
+                await AsyncStorage.setItem("userData", JSON.stringify(user));
+                console.log("User authenticated and saved:", user);
+                navigation.navigate("HomeScreen");
+            } catch (error) {
+                console.error("Error saving data to AsyncStorage:", error);
+            }
         } else {
-            alert('Invalid credentials'); // Show error if no match
+            Alert.alert("Invalid credentials", "Please try again.");
         }
     };
 
@@ -38,36 +66,56 @@ const Authentication = () => {
             <View style={styles.mainContainer}>
                 <Text style={styles.headerText}>Welcome Back!</Text>
                 <Formik
-                    initialValues={{ email: '', password: '' }}
+                    initialValues={{ email: "", password: "" }}
                     validationSchema={validationSchema}
                     onSubmit={handleAuthentication}
                 >
-                    {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
+                    {({
+                        handleChange,
+                        handleBlur,
+                        handleSubmit,
+                        values,
+                        errors,
+                        touched,
+                    }) => (
                         <>
                             <TextInput
                                 placeholder="Enter Email or Mobile Number"
                                 placeholderTextColor="#8E8E93"
                                 style={styles.inputStyle}
                                 keyboardType="email-address"
-                                onChangeText={handleChange('email')}
-                                onBlur={handleBlur('email')}
+                                onChangeText={handleChange("email")}
+                                onBlur={handleBlur("email")}
                                 value={values.email}
                             />
-                            {touched.email && errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
+                            {touched.email && errors.email && (
+                                <Text style={styles.errorText}>
+                                    {errors.email}
+                                </Text>
+                            )}
 
                             <TextInput
                                 placeholder="Enter Password"
                                 placeholderTextColor="#8E8E93"
                                 style={styles.inputStyle}
                                 secureTextEntry={true}
-                                onChangeText={handleChange('password')}
-                                onBlur={handleBlur('password')}
+                                onChangeText={handleChange("password")}
+                                onBlur={handleBlur("password")}
                                 value={values.password}
                             />
-                            {touched.password && errors.password && <Text style={styles.errorText}>{errors.password}</Text>}
+                            {touched.password && errors.password && (
+                                <Text style={styles.errorText}>
+                                    {errors.password}
+                                </Text>
+                            )}
 
-                            <TouchableOpacity style={styles.mainButton} onPress={handleSubmit}>
-                                <Text style={styles.buttonText}>Authenticate</Text>
+                            <TouchableOpacity
+                                style={styles.mainButton}
+                                onPress={handleSubmit}
+                            >
+                                <Text style={styles.buttonText}>
+                                    Authenticate
+                                </Text>
                             </TouchableOpacity>
                         </>
                     )}
@@ -75,7 +123,10 @@ const Authentication = () => {
                 <TouchableOpacity style={styles.mainButton}>
                     <Text style={styles.buttonText}>Continue With Google</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.mainButton}>
+                <TouchableOpacity
+                    style={styles.mainButton}
+                    onPress={() => navigation.navigate("SignUpScreen")}
+                >
                     <Text style={styles.buttonText}>Set Up Account</Text>
                 </TouchableOpacity>
             </View>
@@ -129,7 +180,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.2,
         shadowRadius: 5,
         elevation: 3,
-        marginVertical: 10
+        marginVertical: 10,
     },
     buttonText: {
         color: "white",
@@ -137,7 +188,7 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
     },
     errorText: {
-        color: 'red',
+        color: "red",
         fontSize: 12,
         marginBottom: 5,
     },
