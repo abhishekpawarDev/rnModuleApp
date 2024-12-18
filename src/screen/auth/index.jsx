@@ -1,29 +1,77 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, TextInput, TouchableOpacity, View, Text, ScrollView } from "react-native";
+import { Formik } from 'formik';
+import * as Yup from 'yup';
+import { useNavigation } from "@react-navigation/native";
+import authanticationData from '../../authanticationData.json'
 
 const Authentication = () => {
+    const navigation = useNavigation();
+    const validationSchema = Yup.object().shape({
+        email: Yup.string()
+            .email('Invalid email address')
+            .required('Email is required'),
+        password: Yup.string()
+            .min(6, 'Password must be at least 6 characters')
+            .required('Password is required'),
+    });
+    
+    const [authData , setAuthData] = useState([]);
+    
+    useEffect(() => {
+        setAuthData(authanticationData);
+    }, []);
+
+    const handleAuthentication = (values) => {
+        const user = authData.find(item => item.useremail === values.email && item.userpassword === values.password);
+        
+        if (user) {
+            console.log('User authenticated:', user);
+            navigation.navigate('HomeScreen'); // Navigate to HomeScreen if credentials match
+        } else {
+            alert('Invalid credentials'); // Show error if no match
+        }
+    };
 
     return (
         <ScrollView contentContainerStyle={styles.scrollContainer}>
             <View style={styles.mainContainer}>
                 <Text style={styles.headerText}>Welcome Back!</Text>
+                <Formik
+                    initialValues={{ email: '', password: '' }}
+                    validationSchema={validationSchema}
+                    onSubmit={handleAuthentication}
+                >
+                    {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
+                        <>
+                            <TextInput
+                                placeholder="Enter Email or Mobile Number"
+                                placeholderTextColor="#8E8E93"
+                                style={styles.inputStyle}
+                                keyboardType="email-address"
+                                onChangeText={handleChange('email')}
+                                onBlur={handleBlur('email')}
+                                value={values.email}
+                            />
+                            {touched.email && errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
 
-                <TextInput
-                    placeholder="Enter Email or Mobile Number"
-                    placeholderTextColor="#8E8E93"
-                    style={styles.inputStyle}
-                    keyboardType="email-address"
-                />
-                <TextInput
-                    placeholder="Enter Password"
-                    placeholderTextColor="#8E8E93"
-                    style={styles.inputStyle}
-                    secureTextEntry={true}
-                />
+                            <TextInput
+                                placeholder="Enter Password"
+                                placeholderTextColor="#8E8E93"
+                                style={styles.inputStyle}
+                                secureTextEntry={true}
+                                onChangeText={handleChange('password')}
+                                onBlur={handleBlur('password')}
+                                value={values.password}
+                            />
+                            {touched.password && errors.password && <Text style={styles.errorText}>{errors.password}</Text>}
 
-                <TouchableOpacity style={styles.mainButton}>
-                    <Text style={styles.buttonText}>Authenticate</Text>
-                </TouchableOpacity>
+                            <TouchableOpacity style={styles.mainButton} onPress={handleSubmit}>
+                                <Text style={styles.buttonText}>Authenticate</Text>
+                            </TouchableOpacity>
+                        </>
+                    )}
+                </Formik>
                 <TouchableOpacity style={styles.mainButton}>
                     <Text style={styles.buttonText}>Continue With Google</Text>
                 </TouchableOpacity>
@@ -72,7 +120,7 @@ const styles = StyleSheet.create({
     mainButton: {
         width: "85%",
         height: 40,
-        backgroundColor: "#0095F6", 
+        backgroundColor: "#0095F6",
         borderRadius: 10,
         justifyContent: "center",
         alignItems: "center",
@@ -87,6 +135,11 @@ const styles = StyleSheet.create({
         color: "white",
         fontSize: 16,
         fontWeight: "bold",
+    },
+    errorText: {
+        color: 'red',
+        fontSize: 12,
+        marginBottom: 5,
     },
 });
 
