@@ -57,7 +57,7 @@ const Authentication = () => {
                 console.error("Error saving data to AsyncStorage:", error);
             }
         } else {
-            Alert.alert("Invalid credentials", "Please try again.");
+            Alert.alert("Invalid credentials", "Please Enter Correct Email and Password.");
         }
     };
 
