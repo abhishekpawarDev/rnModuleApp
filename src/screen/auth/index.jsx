@@ -122,7 +122,7 @@ const Authentication = () => {
                 </Formik>
                 <TouchableOpacity
                     style={styles.mainButton}
-                    onPress={() => navigation.navigate("SignUpScreen")}
+                    onPress={() => console.warn('Working On Process')}
                 >
                     <Text style={styles.buttonText}>Set Up Account</Text>
                 </TouchableOpacity>
