@@ -32,7 +32,7 @@ const HomeScreen = () => {
     fetchNews();
   }, []);
 
-  // Handle Back Button to Exit App
+
   useEffect(() => {
     const handleBackPress = () => {
       Alert.alert(
@@ -44,12 +44,12 @@ const HomeScreen = () => {
         ],
         { cancelable: false }
       );
-      return true; // Prevent default behavior
+      return true; 
     };
 
     BackHandler.addEventListener('hardwareBackPress', handleBackPress);
 
-    // Cleanup the listener on unmount
+
     return () => BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
   }, []);
 
