@@ -120,9 +120,6 @@ const Authentication = () => {
                         </>
                     )}
                 </Formik>
-                <TouchableOpacity style={styles.mainButton}>
-                    <Text style={styles.buttonText}>Continue With Google</Text>
-                </TouchableOpacity>
                 <TouchableOpacity
                     style={styles.mainButton}
                     onPress={() => navigation.navigate("SignUpScreen")}
@@ -172,21 +169,16 @@ const styles = StyleSheet.create({
     mainButton: {
         width: "85%",
         height: 40,
-        backgroundColor: "#0095F6",
-        borderRadius: 10,
         justifyContent: "center",
         alignItems: "center",
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.2,
-        shadowRadius: 5,
-        elevation: 3,
         marginVertical: 10,
     },
     buttonText: {
         color: "white",
-        fontSize: 20,
-        fontFamily:'Oswald-Bold'
+        fontSize: 30,
+        fontFamily:'Oswald-Bold',
+        color:'black',
+        textDecorationLine:'underline'
     },
     errorText: {
         color: "red",

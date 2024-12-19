@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "@react-navigation/native";
 
-const UserProfileScreen = ({ navigation }) => {
+const UserProfileScreen = () => {
+    const navigation = useNavigation();
     const [userData, setUserData] = useState(null);
 
     useEffect(() => {
@@ -30,56 +32,51 @@ const UserProfileScreen = ({ navigation }) => {
     };
 
     return (
-        <View style={styles.container}>
+        <View>
+            <View>
             {userData ? (
                 <>
-                    <Text style={styles.welcomeText}>
+                    <Text style={{textAlign:'center', fontFamily:'Oswald-Regular' , fontSize:25}}>
                         Welcome, {userData.username || userData.useremail}!
                     </Text>
                     <TouchableOpacity
-                        style={styles.logoutButton}
                         onPress={handleLogout}
+                        style={{backgroundColor:'red', marginHorizontal:'10%' , padding:3 , marginTop:20 , borderRadius:5 }}
                     >
-                        <Text style={styles.logoutButtonText}>Logout</Text>
+                        <Text style={{textAlign:'center' , fontSize:20,fontFamily:'Oswald-Regular' , color:'white'}}>Logout</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={()=>navigation.navigate('HomeScreen')}
+                        style={{backgroundColor:'#4287f5', marginHorizontal:'10%' , padding:3 , marginTop:20 , borderRadius:5 }}
+                    >
+                        <Text style={{textAlign:'center' , fontSize:20,fontFamily:'Oswald-Regular' , color:'white'}}>Go Back</Text>
                     </TouchableOpacity>
                 </>
             ) : (
-                <Text style={styles.loadingText}>Loading user data...</Text>
+                <Text>Loading user data...</Text>
             )}
+            </View>
+            <View>
+                <Text style={{fontSize:15, marginVertical:20 , marginHorizontal:20 , fontFamily:'Oswald-Regular'}}>
+                The News App is a React Native-based mobile application designed to deliver the latest and trending news. It ensures user privacy by not saving any personal data except the user's Gmail for authentication purposes.
+                </Text>
+                <Text style={{fontSize:15, marginHorizontal:20 , fontFamily:'Oswald-Regular'}}>Key Features:</Text>
+                <Text style={{fontSize:15, marginHorizontal:20 , fontFamily:'Oswald-Regular'}}>
+                Latest News Updates: Stay informed with real-time news from various categories like technology, sports, entertainment, and more.
+                </Text>
+                <Text style={{fontSize:15, marginHorizontal:20 , fontFamily:'Oswald-Regular'}}>
+                User-Friendly Interface: Clean and intuitive UI for seamless navigation and reading experience.
+                </Text>
+                <Text style={{fontSize:15, marginHorizontal:20 , fontFamily:'Oswald-Regular'}}>
+                Gmail Authentication: Easy and secure login using Gmail.
+                </Text>
+                <Text style={{fontSize:15, marginHorizontal:20 , fontFamily:'Oswald-Regular'}}>
+                Efficient Performance: Optimized for smooth and responsive usage across devices.
+                </Text>
+                
+            </View>
         </View>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "#F5F5F7",
-    },
-    welcomeText: {
-        fontSize: 24,
-        fontWeight: "bold",
-        color: "#0095F6",
-        marginBottom: 20,
-    },
-    logoutButton: {
-        width: "80%",
-        height: 50,
-        backgroundColor: "#FF3B30",
-        justifyContent: "center",
-        alignItems: "center",
-        borderRadius: 10,
-    },
-    logoutButtonText: {
-        color: "white",
-        fontSize: 16,
-        fontWeight: "bold",
-    },
-    loadingText: {
-        fontSize: 18,
-        color: "#8E8E93",
-    },
-});
 
 export default UserProfileScreen;
