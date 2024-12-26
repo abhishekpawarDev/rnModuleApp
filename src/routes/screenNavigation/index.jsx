@@ -4,7 +4,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AuthenticationScreen from '../../screen/auth';
 import HomeScreen from '../../screen/home';
 import UserProfileScreen from '../../screen/profile';
-import MobileInfoScreen from '../../screen/mobileInfo';
 import SplashScreen from '../../screen/splashScreen';
 import Authentication from '../../screen/auth';
 
@@ -43,13 +42,13 @@ const Routes = () => {
                         headerShown: false,
                      }}
                 />
-                <Stack.Screen 
+                {/* <Stack.Screen 
                 name='MobileInfoScreen' 
                 component={MobileInfoScreen}
                 options={{
                     headerShown:false,
                 }}
-                />
+                /> */}
             </Stack.Navigator>
         </NavigationContainer>
     );
